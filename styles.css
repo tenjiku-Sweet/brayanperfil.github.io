@@ -1,0 +1,938 @@
+/* ═══════════════════════════════════════════════════════════
+   styles.css — Portfolio Brayan
+   Estructura:
+   1. Variables & Reset
+   2. Cursor
+   3. Navbar
+   4. Hero
+   5. Secciones generales
+   6. About / Tarjetas
+   7. Skills / Barras
+   8. Intereses
+   9. Gatas
+   10. Música / Playlist
+   11. Anime
+   12. 6to Sentido
+   13. Contacto
+   14. Footer
+   15. Utilidades (reveal, divider, glitch, noise)
+   16. Animaciones @keyframes
+   17. Responsive
+═══════════════════════════════════════════════════════════ */
+
+
+/* ─── 1. VARIABLES & RESET ─── */
+:root {
+  --neon:    #00f5d4;
+  --neon2:   #f72585;
+  --neon3:   #7209b7;
+  --dark:    #050810;
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --border:  rgba(0, 245, 212, 0.18);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--dark);
+  color: #e0e0e0;
+  font-family: 'Outfit', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Textura de ruido sutil sobre todo el fondo */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 500;
+}
+
+/* Canvas de estrellas fijo en el fondo */
+#stars {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+
+/* ─── 2. CURSOR PERSONALIZADO ─── */
+.cursor {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--neon);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease, background 0.15s ease;
+  mix-blend-mode: screen;
+}
+
+.cursor.hover {
+  transform: scale(3);
+  background: rgba(0, 245, 212, 0.15);
+}
+
+
+/* ─── 3. NAVBAR ─── */
+.navbar {
+  background: rgba(5, 8, 16, 0.85) !important;
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+}
+
+.navbar-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  color: var(--neon) !important;
+  letter-spacing: 3px;
+}
+
+.nav-link {
+  color: #aaa !important;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+  font-family: 'Space Mono', monospace;
+}
+
+.nav-link:hover {
+  color: var(--neon) !important;
+}
+
+
+/* ─── 4. HERO ─── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  padding: 120px 20px 80px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1100px;
+  width: 100%;
+}
+
+.hero-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--neon);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+}
+
+.hero-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 10vw, 8rem);
+  line-height: 0.9;
+  color: #fff;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s forwards;
+}
+
+.hero-name span {
+  -webkit-text-stroke: 2px var(--neon);
+  color: transparent;
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  color: #888;
+  margin-top: 20px;
+  line-height: 1.7;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s forwards;
+}
+
+.hero-sub strong {
+  color: var(--neon2);
+}
+
+.hero-btns {
+  margin-top: 36px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s forwards;
+}
+
+/* Botones */
+.btn-neon {
+  border: 1.5px solid var(--neon);
+  color: var(--neon);
+  background: transparent;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  padding: 12px 28px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-neon:hover {
+  background: var(--neon);
+  color: #000;
+  box-shadow: 0 0 30px var(--neon);
+}
+
+.btn-pink {
+  border: 1.5px solid var(--neon2);
+  color: var(--neon2);
+  background: transparent;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  padding: 12px 28px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-pink:hover {
+  background: var(--neon2);
+  color: #fff;
+  box-shadow: 0 0 30px var(--neon2);
+}
+
+/* Avatar con órbita */
+.avatar-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeIn 1.2s 0.5s forwards;
+}
+
+.avatar-ring {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  border: 2px solid var(--neon);
+  box-shadow: 0 0 40px rgba(0,245,212,0.3), inset 0 0 40px rgba(0,245,212,0.05);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(114,9,183,0.4), rgba(247,37,133,0.3));
+}
+
+.avatar-emoji {
+  font-size: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  filter: drop-shadow(0 0 20px rgba(0,245,212,0.5));
+}
+
+.orbit {
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  border: 1px dashed rgba(0,245,212,0.2);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation: spin 12s linear infinite;
+}
+
+.orbit-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--neon2);
+  border-radius: 50%;
+  position: absolute;
+  top: -5px; left: 50%;
+  box-shadow: 0 0 10px var(--neon2);
+}
+
+
+/* ─── 5. SECCIONES GENERALES ─── */
+section {
+  position: relative;
+  z-index: 1;
+  padding: 100px 20px;
+}
+
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--neon);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 50px;
+}
+
+.section-title span {
+  color: var(--neon);
+}
+
+
+/* ─── 6. ABOUT / TARJETAS ─── */
+#about {
+  background: linear-gradient(180deg, var(--dark) 0%, rgba(114,9,183,0.05) 100%);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.fact-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 28px;
+  transition: border-color 0.3s, transform 0.3s;
+  cursor: default;
+}
+
+.fact-card:hover {
+  border-color: var(--neon);
+  transform: translateY(-4px);
+}
+
+.fact-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.fact-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--neon);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.fact-text {
+  color: #bbb;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* Timeline */
+.timeline {
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  padding-left: 40px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 10px; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, var(--neon), var(--neon2), transparent);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -35px; top: 4px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--neon);
+  box-shadow: 0 0 10px var(--neon);
+}
+
+.timeline-year {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--neon);
+  margin-bottom: 6px;
+}
+
+.timeline-content {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px 24px;
+}
+
+.timeline-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.timeline-text {
+  font-size: 0.9rem;
+  color: #888;
+  line-height: 1.6;
+}
+
+
+/* ─── 7. SKILLS / BARRAS ─── */
+#skills {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.skills-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.skill-bar-wrap {
+  margin-bottom: 24px;
+}
+
+.skill-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: #aaa;
+  margin-bottom: 8px;
+}
+
+.skill-bar-track {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--neon3), var(--neon));
+  width: 0;                                        /* inicia en 0 */
+  transition: width 1.5s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 0 10px var(--neon);
+}
+
+
+/* ─── 8. INTERESES ─── */
+#interests {
+  background: linear-gradient(180deg, rgba(114,9,183,0.05) 0%, var(--dark) 100%);
+}
+
+.interests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.interest-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 32px 20px;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.interest-card:hover {
+  border-color: var(--neon2);
+  background: rgba(247, 37, 133, 0.08);
+  transform: translateY(-6px) scale(1.02);
+}
+
+.interest-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.interest-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: #ccc;
+  letter-spacing: 2px;
+}
+
+
+/* ─── 9. GATAS ─── */
+#cats {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.cats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.cat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 40px;
+  text-align: center;
+  transition: all 0.4s;
+}
+
+.cat-card:hover {
+  border-color: var(--neon2);
+  box-shadow: 0 20px 60px rgba(247, 37, 133, 0.15);
+}
+
+.cat-emoji {
+  font-size: 5rem;
+  display: block;
+  margin-bottom: 16px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.cat-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--neon2);
+  margin-bottom: 8px;
+}
+
+.cat-desc {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+
+/* ─── 10. MÚSICA / PLAYLIST ─── */
+#music {
+  background: linear-gradient(180deg, var(--dark) 0%, rgba(247,37,133,0.05) 100%);
+}
+
+.music-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.playlist {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 24px;
+  background: var(--card-bg);
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de brillo al hover / activo */
+.track::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 0; height: 100%;
+  background: linear-gradient(90deg, rgba(0,245,212,0.08), transparent);
+  transition: width 0.4s;
+}
+
+.track:hover::before,
+.track.active::before {
+  width: 100%;
+}
+
+.track:hover,
+.track.active {
+  border-color: var(--neon);
+}
+
+.track-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: #555;
+  width: 24px;
+}
+
+.track.active .track-num {
+  color: var(--neon);
+}
+
+.track-emoji {
+  font-size: 1.4rem;
+}
+
+.track-info {
+  flex: 1;
+}
+
+.track-title {
+  font-size: 0.95rem;
+  color: #eee;
+  margin-bottom: 2px;
+}
+
+.track.active .track-title {
+  color: var(--neon);
+}
+
+.track-artist {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: #666;
+}
+
+.track-genre {
+  font-size: 0.65rem;
+  font-family: 'Space Mono', monospace;
+  background: rgba(0, 245, 212, 0.1);
+  color: var(--neon);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+/* Barras de sonido animadas */
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 20px;
+  width: 20px;
+}
+
+.bar {
+  width: 3px;
+  background: var(--neon);
+  border-radius: 1px;
+  animation: none;
+}
+
+.track.active .bar:nth-child(1) { animation: bar1 0.5s infinite alternate; }
+.track.active .bar:nth-child(2) { animation: bar2 0.4s infinite alternate; }
+.track.active .bar:nth-child(3) { animation: bar3 0.6s infinite alternate; }
+
+
+/* ─── 11. ANIME ─── */
+#anime {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.anime-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.anime-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 32px 24px;
+  transition: all 0.3s;
+}
+
+.anime-card:hover {
+  border-color: var(--neon3);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(114, 9, 183, 0.2);
+}
+
+.anime-emoji {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.anime-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.anime-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-family: 'Space Mono', monospace;
+  background: rgba(114, 9, 183, 0.3);
+  color: #b57bee;
+  border: 1px solid rgba(114, 9, 183, 0.5);
+  padding: 3px 8px;
+  border-radius: 2px;
+  margin-bottom: 12px;
+}
+
+.anime-desc {
+  font-size: 0.9rem;
+  color: #888;
+  line-height: 1.6;
+}
+
+
+/* ─── 12. 6TO SENTIDO ─── */
+#sixthsense {
+  background: linear-gradient(180deg, rgba(114,9,183,0.1) 0%, rgba(247,37,133,0.05) 100%);
+  text-align: center;
+}
+
+.sense-orb {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(114,9,183,0.6) 0%, rgba(247,37,133,0.3) 50%, transparent 70%);
+  margin: 0 auto 40px;
+  position: relative;
+  animation: pulse 4s ease-in-out infinite;
+  cursor: pointer;
+}
+
+.sense-orb::after {
+  content: '🔮';
+  font-size: 5rem;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sense-text {
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  color: #aaa;
+  line-height: 1.8;
+}
+
+.sense-text em {
+  color: var(--neon2);
+  font-style: normal;
+  font-weight: 500;
+}
+
+#oracleMsg {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--neon2);
+  min-height: 24px;
+  text-align: center;
+}
+
+
+/* ─── 13. CONTACTO ─── */
+#contact {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.contact-wrap {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 16px 28px;
+  color: #aaa;
+  text-decoration: none;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.social-link:hover {
+  border-color: var(--neon);
+  color: var(--neon);
+  box-shadow: 0 0 20px rgba(0, 245, 212, 0.15);
+}
+
+
+/* ─── 14. FOOTER ─── */
+footer {
+  text-align: center;
+  padding: 40px;
+  border-top: 1px solid var(--border);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: #444;
+  z-index: 1;
+  position: relative;
+}
+
+footer span {
+  color: var(--neon2);
+}
+
+
+/* ─── 15. UTILIDADES ─── */
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Efecto glitch en hover */
+.glitch {
+  position: relative;
+}
+
+.glitch:hover::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 2px; top: 0;
+  color: var(--neon2);
+  clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+  animation: glitch1 0.3s infinite;
+}
+
+/* Notas de foto */
+.photo-note {
+  background: var(--card-bg);
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  padding: 24px;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: #555;
+}
+
+.photo-note span {
+  color: var(--neon);
+}
+
+
+/* ─── 16. ANIMACIONES ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 40px rgba(114,9,183,0.4); }
+  50%       { box-shadow: 0 0 80px rgba(114,9,183,0.7), 0 0 120px rgba(247,37,133,0.3); }
+}
+
+@keyframes bar1 {
+  from { height: 4px; }
+  to   { height: 18px; }
+}
+
+@keyframes bar2 {
+  from { height: 8px; }
+  to   { height: 14px; }
+}
+
+@keyframes bar3 {
+  from { height: 6px; }
+  to   { height: 20px; }
+}
+
+@keyframes glitch1 {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(-4px); }
+}
+
+
+/* ─── 17. RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-btns {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .cats-grid {
+    grid-template-columns: 1fr;
+  }
+}
